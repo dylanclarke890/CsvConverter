@@ -50,38 +50,17 @@ namespace CsvConverter.Services
             Console.WriteLine("Converting to XML...");
 
             var lines = File.ReadAllLines(inputFilePath);
-
             var xmlTree = new XElement("CSV");
 
-            AddHeader(lines[0], ref xmlTree);
+            AddContentForEachLine(lines[0], ref xmlTree, "Header");
 
             foreach (var line in lines.Skip(1))
             {
-                AddContentForEachLine(line, ref xmlTree);
+                AddContentForEachLine(line, ref xmlTree, "Row");
             }
+            
             File.WriteAllText(outputFilePath + "output.xml", xmlTree.ToString());
-
             Console.WriteLine($"output.xml created in {outputFilePath}.");
-        }
-
-        /// <summary>
-        /// Adds a header element to the tree.
-        /// </summary>
-        /// <param name="line">A valid row of CSV headers.</param>
-        /// <param name="xmlTree">A reference to the XML tree being built.</param>
-        private static void AddHeader(string line, ref XElement xmlTree)
-        {
-            if (string.IsNullOrWhiteSpace(line)) return;
-
-            var currentTree = new XElement("Line");
-
-            string[] slices = line.Split(",");
-            for (int i = 0; i < slices.Length; i++)
-            {
-                currentTree.Add(new XElement($"Header{i}", slices[i].ToString().Trim()));
-            }
-
-            xmlTree.Add(currentTree);
         }
 
         /// <summary>
@@ -89,7 +68,7 @@ namespace CsvConverter.Services
         /// </summary>
         /// <param name="line">A valid row of CSV values.</param>
         /// <param name="xmlTree">A reference to the XML tree being built.</param>
-        private static void AddContentForEachLine(string line, ref XElement xmlTree)
+        private static void AddContentForEachLine(string line, ref XElement xmlTree, string elementName)
         {
             if (string.IsNullOrWhiteSpace(line)) return;
 
@@ -98,7 +77,7 @@ namespace CsvConverter.Services
             string[] slices = line.Split(",");
             for (int i = 0; i < slices.Length; i++)
             {
-                currentTree.Add(new XElement($"Column{i}", slices[i].ToString().Trim()));
+                currentTree.Add(new XElement($"{elementName}{i}", slices[i].ToString().Trim()));
             }
 
             xmlTree.Add(currentTree);
