@@ -41,6 +41,12 @@ namespace CsvConverter.Services
         /// <param name="outputFilePath">A valid directory to output the XML file to.</param>
         public static void ToXml(string inputFilePath, string outputFilePath)
         {
+            if (string.IsNullOrWhiteSpace(inputFilePath) || string.IsNullOrWhiteSpace(outputFilePath))
+            {
+                Console.WriteLine("Invalid path provided.");
+                return;
+            }
+
             Console.WriteLine("Converting to XML...");
 
             var lines = File.ReadAllLines(inputFilePath);
