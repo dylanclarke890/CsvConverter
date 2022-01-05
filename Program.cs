@@ -8,9 +8,9 @@ namespace DylanClarkeCsvToJson
         /// Given a filepath, a conversion type and an output path, will output a JSON or XML file.
         /// </summary>
         /// <param name="args">
-        /// <c>args[0]</c> should be a path to the CSV file (defaults to sample file provided).
+        /// <c>args[0]</c> should be a valid path to the CSV file.
         /// <c>args[1]</c> should be either json or xml.
-        /// <c>args[2]</c> should be path to output to (defaults to current working directory).
+        /// <c>args[2]</c> should be path to output the file to (cam default to current directory if not valid/provided).
         /// </param>
         static void Main(string[] args)
         {
@@ -20,10 +20,10 @@ namespace DylanClarkeCsvToJson
             {
                 case ConversionType.Json:
                     CsvConvert.ToJson(inputParameters.CsvFilePath, inputParameters.OutputDirectory);
-                    break;
+                    return;
                 case ConversionType.Xml:
                     CsvConvert.ToXml(inputParameters.CsvFilePath, inputParameters.OutputDirectory);
-                    break;
+                    return;
                 default:
                     return;
             }

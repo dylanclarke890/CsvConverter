@@ -2,6 +2,8 @@
 using Aspose.Cells.Utility;
 using System;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace DylanClarkeCsvToJson.Services
 {
@@ -17,7 +19,6 @@ namespace DylanClarkeCsvToJson.Services
             Aspose.Cells.Range range = workbook.Worksheets[0].Cells.CreateRange(0, 0, lastCell.Row + 1, lastCell.Column + 1);
             string data = JsonUtility.ExportRangeToJson(range, new());
 
-            Console.WriteLine(data);
             File.WriteAllText(outputFilePath + "output.json", data);
             Console.WriteLine($"output.json created in {outputFilePath}.");
         }
@@ -26,12 +27,45 @@ namespace DylanClarkeCsvToJson.Services
         {
             Console.WriteLine("Converting to XML...");
 
-            var fileContents = File.ReadAllLines(inputFilePath);
-            var headers = fileContents[0].Split(", ");
-            foreach (var header in headers)
+            var lines = File.ReadAllLines(inputFilePath);
+
+            var xmlTree = new XElement("CSV");
+
+            AddHeader(lines[0], ref xmlTree);
+
+            foreach (var line in lines.Skip(1))
             {
-                Console.WriteLine(header);
+                AddContentForEachLine(line, ref xmlTree);
             }
+            File.WriteAllText(outputFilePath + "output.xml", xmlTree.ToString());
+
+            Console.WriteLine($"output.xml created in {outputFilePath}.");
+        }
+
+        private static void AddHeader(string line, ref XElement xmlTree)
+        {
+            var currentTree = new XElement("Row");
+
+            string[] slices = line.Split(",");
+            for (int i = 0; i < slices.Length; i++)
+            {
+                currentTree.Add(new XElement($"Header{i}", slices[i].ToString().Trim()));
+            }
+
+            xmlTree.Add(currentTree);
+        }
+
+        private static void AddContentForEachLine(string line, ref XElement xmlTree)
+        {
+            var currentTree = new XElement("Row");
+
+            string[] slices = line.Split(",");
+            for (int i = 0; i < slices.Length; i++)
+            {
+                currentTree.Add(new XElement($"Column{i}", slices[i].ToString().Trim()));
+            }
+
+            xmlTree.Add(currentTree);
         }
     }
 }

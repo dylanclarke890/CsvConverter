@@ -26,11 +26,12 @@ namespace DylanClarkeCsvToJson.Services
             {
                 inputParameters.CsvFilePath = Args[0];
             }
-            if (string.IsNullOrWhiteSpace(inputParameters.CsvFilePath) || !File.Exists(inputParameters.CsvFilePath))
+            if (string.IsNullOrWhiteSpace(inputParameters.CsvFilePath) || !File.Exists(Path.GetFullPath(inputParameters.CsvFilePath)))
             {
                 Console.WriteLine($"File was not found at {inputParameters.CsvFilePath}.");
                 return default!;
             }
+            inputParameters.CsvFilePath = Path.GetFullPath(inputParameters.CsvFilePath);
 
             // conversion type
             if (Args == null || Args.Length <= 1)
@@ -58,7 +59,7 @@ namespace DylanClarkeCsvToJson.Services
                 inputParameters.OutputDirectory = Args[2];
             }
 
-            if (string.IsNullOrWhiteSpace(inputParameters.OutputDirectory) || !Directory.Exists(inputParameters.OutputDirectory))
+            if (string.IsNullOrWhiteSpace(inputParameters.OutputDirectory) || !Directory.Exists(Path.GetFullPath(inputParameters.OutputDirectory)))
             {
                 Console.WriteLine($"Unable to find existing directory for {inputParameters.OutputDirectory}, would you like to use the current directory? Enter 'Y' to confirm or anything else to exit.");
                 if (Console.ReadLine().ToLower() != "y")
@@ -68,6 +69,10 @@ namespace DylanClarkeCsvToJson.Services
 
                 Console.WriteLine("Using current directory...");
                 inputParameters.OutputDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                inputParameters.OutputDirectory = Path.GetFullPath(inputParameters.OutputDirectory);
             }
 
 
