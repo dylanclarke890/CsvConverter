@@ -1,4 +1,4 @@
-﻿namespace DylanClarkeCsvToJson
+﻿namespace DylanClarkeCsvConverter
 {
     public enum ConversionType
     {

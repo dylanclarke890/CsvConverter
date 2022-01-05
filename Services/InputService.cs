@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace DylanClarkeCsvToJson.Services
+namespace DylanClarkeCsvConverter.Services
 {
     public class InputService
     {

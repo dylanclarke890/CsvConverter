@@ -1,6 +1,6 @@
-﻿using DylanClarkeCsvToJson.Services;
+﻿using DylanClarkeCsvConverter.Services;
 
-namespace DylanClarkeCsvToJson
+namespace DylanClarkeCsvConverter
 {
     class Program
     {

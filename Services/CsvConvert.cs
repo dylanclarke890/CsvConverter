@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DylanClarkeCsvToJson.Services
+namespace DylanClarkeCsvConverter.Services
 {
     public class CsvConvert
     {
