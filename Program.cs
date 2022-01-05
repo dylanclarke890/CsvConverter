@@ -1,6 +1,6 @@
-﻿using DylanClarkeCsvConverter.Services;
+﻿using CsvConverter.Services;
 
-namespace DylanClarkeCsvConverter
+namespace CsvConverter
 {
     class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace DylanClarkeCsvConverter
+﻿namespace CsvConverter
 {
     public class InputParameters
     {

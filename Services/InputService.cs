@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace DylanClarkeCsvConverter.Services
+namespace CsvConverter.Services
 {
     public class InputService
     {

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DylanClarkeCsvConverter.Services
+namespace CsvConverter.Services
 {
     public class CsvConvert
     {
