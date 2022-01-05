@@ -9,8 +9,19 @@ namespace DylanClarkeCsvToJson.Services
 {
     public class CsvConvert
     {
+        /// <summary>
+        /// Uses Aspose.Cells to convert a CSV file to JSON.
+        /// </summary>
+        /// <param name="inputFilePath">A valid path to a CSV file.</param>
+        /// <param name="outputFilePath">A valid directory to output the JSON file to.</param>
         public static void ToJson(string inputFilePath, string outputFilePath)
         {
+            if (string.IsNullOrWhiteSpace(inputFilePath) || string.IsNullOrWhiteSpace(outputFilePath))
+            {
+                Console.WriteLine("Invalid path provided.");
+                return;
+            }
+
             Console.WriteLine("Converting to JSON...");
 
             Workbook workbook = new(inputFilePath, new(LoadFormat.Csv));
@@ -23,6 +34,11 @@ namespace DylanClarkeCsvToJson.Services
             Console.WriteLine($"output.json created in {outputFilePath}.");
         }
 
+        /// <summary>
+        /// Uses System.Xml.Linq to build an XML tree from a CSV file, and saves it to an XML file.
+        /// </summary>
+        /// <param name="inputFilePath">A valid path to a CSV file.</param>
+        /// <param name="outputFilePath">A valid directory to output the XML file to.</param>
         public static void ToXml(string inputFilePath, string outputFilePath)
         {
             Console.WriteLine("Converting to XML...");
@@ -42,9 +58,16 @@ namespace DylanClarkeCsvToJson.Services
             Console.WriteLine($"output.xml created in {outputFilePath}.");
         }
 
+        /// <summary>
+        /// Adds a header element to the tree.
+        /// </summary>
+        /// <param name="line">A valid row of CSV headers.</param>
+        /// <param name="xmlTree">A reference to the XML tree being built.</param>
         private static void AddHeader(string line, ref XElement xmlTree)
         {
-            var currentTree = new XElement("Row");
+            if (string.IsNullOrWhiteSpace(line)) return;
+
+            var currentTree = new XElement("Line");
 
             string[] slices = line.Split(",");
             for (int i = 0; i < slices.Length; i++)
@@ -55,9 +78,16 @@ namespace DylanClarkeCsvToJson.Services
             xmlTree.Add(currentTree);
         }
 
+        /// <summary>
+        /// Adds a column element to the tree.
+        /// </summary>
+        /// <param name="line">A valid row of CSV values.</param>
+        /// <param name="xmlTree">A reference to the XML tree being built.</param>
         private static void AddContentForEachLine(string line, ref XElement xmlTree)
         {
-            var currentTree = new XElement("Row");
+            if (string.IsNullOrWhiteSpace(line)) return;
+
+            var currentTree = new XElement("Line");
 
             string[] slices = line.Split(",");
             for (int i = 0; i < slices.Length; i++)

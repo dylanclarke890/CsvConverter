@@ -12,6 +12,11 @@ namespace DylanClarkeCsvToJson.Services
             Args = args;
         }
 
+        /// <summary>
+        /// Builds a new set of <see cref="InputParameters"/>, either using arguments provided via <c>Main(string[] args)</c>,
+        /// or provided by <c>Console.ReadLine()</c> as it checks what has already been provided.
+        /// </summary>
+        /// <returns>A new instance of <see cref="InputParameters"/> if valid, <c>default!</c> otherwise.</returns>
         public InputParameters GetInputParameters()
         {
             InputParameters inputParameters = new();
@@ -79,6 +84,11 @@ namespace DylanClarkeCsvToJson.Services
             return inputParameters;
         }
 
+        /// <summary>
+        /// Converts <paramref name="textToParse"/> to a <see cref="ConversionType"/>.
+        /// </summary>
+        /// <param name="textToParse">The text to parse.</param>
+        /// <returns>The converted <see cref="ConversionType"/> if valid, <see cref="ConversionType.NotSpecified"/> if not.</returns>
         private static ConversionType ParseConversionType(string textToParse)
         {
             if (string.IsNullOrWhiteSpace(textToParse) || !Enum.TryParse<ConversionType>(textToParse, true, out var result))

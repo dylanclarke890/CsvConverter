@@ -25,6 +25,7 @@ namespace DylanClarkeCsvToJson
                     CsvConvert.ToXml(inputParameters.CsvFilePath, inputParameters.OutputDirectory);
                     return;
                 default:
+                    System.Console.WriteLine("Couldn't determine conversion type");
                     return;
             }
         }
