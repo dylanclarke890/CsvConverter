@@ -42,13 +42,13 @@ namespace CsvConverter.Services
             if (Args == null || Args.Length <= 1)
             {
                 Console.WriteLine("JSON or XML?");
-                inputParameters.Conversion = ParseConversionType(Console.ReadLine());
+                inputParameters.ConvertTo = ParseConversionType(Console.ReadLine());
             }
             else
             {
-                inputParameters.Conversion = ParseConversionType(Args[1]);
+                inputParameters.ConvertTo = ParseConversionType(Args[1]);
             }
-            if (inputParameters.Conversion is ConversionType.NotSpecified)
+            if (inputParameters.ConvertTo is ConversionType.NotSpecified)
             {
                 return default!;
             }

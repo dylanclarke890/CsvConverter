@@ -16,7 +16,7 @@ namespace CsvConverter
         {
             InputParameters inputParameters = new InputService(args).GetInputParameters();
 
-            switch (inputParameters?.Conversion)
+            switch (inputParameters?.ConvertTo)
             {
                 case ConversionType.Json:
                     CsvConvert.ToJson(inputParameters.CsvFilePath, inputParameters.OutputDirectory);
